@@ -70,6 +70,6 @@ test "email should not be too long" do
   end
   
   test "authenticated? should return false for user with nil digest" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember, '')
   end  
 end
