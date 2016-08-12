@@ -4,6 +4,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
  def setup
    @user = users(:michael)
    @other_user = users(:archer)
+   @unactivated_user = users(:chris)
  end
   test "should get new" do
     get signup_path
@@ -65,6 +66,13 @@ end
     assert_no_difference 'User.count' do
       delete user_path(@user)
     end
+    assert_redirected_to root_url
+  end
+  
+  test "should only show activated users" do
+    log_in_as(@other_user)
+    assert_not @unactivated_user.activated?
+    get user_path(@unactivated_user)
     assert_redirected_to root_url
   end
 end
